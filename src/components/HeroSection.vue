@@ -91,7 +91,7 @@ watch(reducedMotion, (reduced) => {
         </h1>
 
         <p class="hero__sub">
-          I design and build clean, human-centered websites and apps, with a touch of AI.
+          I design and build clean, human-centered websites and apps
         </p>
 
         <div class="hero__actions">
