@@ -66,12 +66,12 @@ async function submitForm() {
   const message = form.value.message.trim()
 
   if (!name || !mail || !message) {
-    feedback.value = { type: 'error', text: 'Nama, email, dan pesan wajib diisi.' }
+    feedback.value = { type: 'error', text: 'Name, email, and message are required.' }
     return
   }
 
   if (!emailPattern.test(mail)) {
-    feedback.value = { type: 'error', text: 'Masukkan alamat email yang valid.' }
+    feedback.value = { type: 'error', text: 'Please enter a valid email address.' }
     return
   }
 
@@ -91,7 +91,7 @@ async function submitForm() {
         name,
         email: mail,
         message,
-        subject: `Pesan baru dari ${name}`,
+        subject: `New message from ${name}`,
       }),
     })
 
@@ -101,9 +101,9 @@ async function submitForm() {
     }
 
     form.value = { name: '', email: '', message: '' }
-    feedback.value = { type: 'success', text: 'Pesan terkirim! Terima kasih 😊' }
+    feedback.value = { type: 'success', text: 'Message sent! Thank you 😊' }
   } catch (error) {
-    feedback.value = { type: 'error', text: 'Gagal mengirim, coba lagi' }
+    feedback.value = { type: 'error', text: 'Failed to send, please try again' }
   } finally {
     sending.value = false
   }
@@ -158,15 +158,6 @@ onBeforeUnmount(() => clearTimeout(timer))
               <AppIcon name="download" :size="18" />
               Download CV
             </a>
-
-            <a
-              class="btn btn--ghost"
-              href="/resume-putri-en.pdf"
-              download="Resume-Halimatussadiyah-Lola-Putri.pdf"
-            >
-              <AppIcon name="download" :size="18" />
-              Download Resume
-            </a>
           </div>
 
           <a class="contact__mail" href="mailto:sadiyahputri32@gmail.com">
@@ -177,13 +168,13 @@ onBeforeUnmount(() => clearTimeout(timer))
           <form class="contact__form" novalidate @submit.prevent="submitForm">
             <div class="contact__form-row">
               <label class="field">
-                <span>Nama</span>
+                <span>Name</span>
                 <input
                   v-model="form.name"
                   type="text"
                   name="name"
                   autocomplete="name"
-                  placeholder="Nama lengkap"
+                  placeholder="Your full name"
                   required
                 />
               </label>
@@ -195,19 +186,19 @@ onBeforeUnmount(() => clearTimeout(timer))
                   type="email"
                   name="email"
                   autocomplete="email"
-                  placeholder="nama@email.com"
+                  placeholder="you@example.com"
                   required
                 />
               </label>
             </div>
 
             <label class="field">
-              <span>Pesan</span>
+              <span>Message</span>
               <textarea
                 v-model="form.message"
                 name="message"
                 rows="4"
-                placeholder="Ceritakan project atau peran yang Anda tawarkan..."
+                placeholder="Tell me about your project or the role you're offering..."
                 required
               ></textarea>
             </label>
@@ -229,7 +220,7 @@ onBeforeUnmount(() => clearTimeout(timer))
               :aria-busy="sending"
             >
               <AppIcon name="send" :size="17" />
-              {{ sending ? 'Mengirim...' : 'Kirim Pesan' }}
+              {{ sending ? 'Sending...' : 'Send Message' }}
             </button>
           </form>
         </div>
@@ -239,7 +230,7 @@ onBeforeUnmount(() => clearTimeout(timer))
     <Transition name="toast">
       <div v-if="showToast" class="toast" role="status" aria-live="polite">
         <AppIcon name="check" :size="16" />
-        Email disalin!
+        Email copied!
       </div>
     </Transition>
   </section>

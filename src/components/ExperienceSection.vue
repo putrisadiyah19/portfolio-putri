@@ -110,7 +110,7 @@ onBeforeUnmount(() => {
               @click="openCertificate(item)"
             >
               <AppIcon name="award" :size="15" />
-              Lihat Sertifikat
+              View Certificate
             </button>
           </div>
         </li>
@@ -125,13 +125,13 @@ onBeforeUnmount(() => {
         class="lightbox"
         role="dialog"
         aria-modal="true"
-        :aria-label="`Sertifikat ${activeCertificate.title}`"
+        :aria-label="`Certificate ${activeCertificate.title}`"
         @click.self="closeCertificate"
       >
         <button
           class="lightbox__close"
           type="button"
-          aria-label="Tutup sertifikat"
+          aria-label="Close certificate"
           @click="closeCertificate"
         >
           <AppIcon name="close" :size="22" />
@@ -142,13 +142,13 @@ onBeforeUnmount(() => {
             v-if="isPdf"
             class="lightbox__frame"
             :src="activeCertificate.certificate"
-            :title="`Sertifikat ${activeCertificate.title}`"
+            :title="`Certificate ${activeCertificate.title}`"
           ></iframe>
           <img
             v-else
             class="lightbox__image"
             :src="activeCertificate.certificate"
-            :alt="`Sertifikat ${activeCertificate.title}`"
+            :alt="`Certificate ${activeCertificate.title}`"
           />
           <figcaption class="lightbox__caption">
             {{ activeCertificate.title }} · {{ activeCertificate.period }}

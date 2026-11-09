@@ -100,7 +100,7 @@ const projects = [
     categoryLabel: 'UI/UX',
     meta: 'POS system · QA',
     description:
-      'Desain UI/UX sistem kasir (POS) untuk usaha frozen food, mencakup alur transaksi, manajemen produk, dan pengujian kualitas (QA) tampilan.',
+      'UI/UX design for a point-of-sale (POS) system for a frozen food business, covering the transaction flow, product management, and visual QA.',
     tags: ['POS', 'UI/UX', 'QA'],
     links: [
       {
