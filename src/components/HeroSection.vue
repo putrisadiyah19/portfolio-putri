@@ -100,14 +100,6 @@ watch(reducedMotion, (reduced) => {
             <AppIcon name="arrow-right" :size="18" />
           </a>
           <a href="#contact" class="btn btn--ghost">Let's Work Together</a>
-          <a
-            href="/resume-putri-en.pdf"
-            download="Resume-Halimatussadiyah-Lola-Putri.pdf"
-            class="btn btn--ghost"
-          >
-            <AppIcon name="download" :size="18" />
-            Download Resume
-          </a>
         </div>
 
         <ul class="hero__facts">

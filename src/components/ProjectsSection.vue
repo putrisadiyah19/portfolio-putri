@@ -18,8 +18,12 @@ const projects = [
     description:
       'Fullstack web developer internship building a cinema ticketing platform, covering film browsing, seat selection, and the admin side of the booking flow.',
     tags: ['Fullstack', 'Web App', 'Booking Flow'],
-    link: '#',
-    linkLabel: 'View Project',
+    links: [
+      {
+        label: 'View Project',
+        href: 'https://www.figma.com/design/sCFyH0vqtCRDZsrmoc8Vmr/WebMOA-Kelompok-3?node-id=90-197&t=McRg753Q79K5ueN6-1',
+      },
+    ],
     image: '/projects/ticketing.png',
     alt: 'Cinema ticketing platform interface showing film listings and seat selection',
     monogram: 'CT',
@@ -34,8 +38,16 @@ const projects = [
     description:
       'A RoBERTa-based model that classifies six mental-health categories from Reddit narratives, with ADWIN drift monitoring to track changing language patterns.',
     tags: ['RoBERTa', 'NLP', 'ADWIN'],
-    link: 'https://huggingface.co/putrisadiyah19/mental-health-roberta',
-    linkLabel: 'View Demo',
+    links: [
+      {
+        label: 'Demo',
+        href: 'https://huggingface.co/putrisadiyah19/mental-health-roberta',
+      },
+      {
+        label: 'Code',
+        href: 'https://github.com/putrisadiyah19/mental-health-app',
+      },
+    ],
     image: '/projects/roberta.png',
     alt: 'Illustration of text narratives flowing into a RoBERTa model that sorts them into mental-health categories, with a drift-monitoring dashboard',
     monogram: 'MH',
@@ -50,8 +62,12 @@ const projects = [
     description:
       'A Yogyakarta tourism platform designed with a team, from user research and flows to high-fidelity screens that make local destinations easier to explore.',
     tags: ['Figma', 'User Flow', 'Tourism'],
-    link: '#',
-    linkLabel: 'View Case Study',
+    links: [
+      {
+        label: 'View Prototype',
+        href: 'https://www.figma.com/design/9mXRwIEvYzQi9d9W2NNN1W/NEW-FP-P.WEB?node-id=5-445&t=84IjQYco3OQ1HqQU-1',
+      },
+    ],
     image: '/projects/dewiji.png',
     alt: 'DEWIJI tourism website mockup showing destination discovery screens',
     monogram: 'DW',
@@ -66,8 +82,12 @@ const projects = [
     description:
       'A home and office cleaning service app focused on a simple booking flow and clear service information, so scheduling help feels effortless.',
     tags: ['Figma', 'Prototyping', 'Service App'],
-    link: '#',
-    linkLabel: 'View Case Study',
+    links: [
+      {
+        label: 'View Prototype',
+        href: 'https://www.figma.com/design/jrxbHIdwUmrFHrnxtX2DaR/Mockup-IMK-kel-3?node-id=75-933&t=CF8jitLiyDZ8BzF5-1',
+      },
+    ],
     image: '/projects/myjoyy.jpg',
     alt: 'MYJOYY cleaning service app home screen showing service categories and popular services',
     monogram: 'MJ',
@@ -82,8 +102,12 @@ const projects = [
     description:
       'Desain UI/UX sistem kasir (POS) untuk usaha frozen food, mencakup alur transaksi, manajemen produk, dan pengujian kualitas (QA) tampilan.',
     tags: ['POS', 'UI/UX', 'QA'],
-    link: '#',
-    linkLabel: 'View Case Study',
+    links: [
+      {
+        label: 'View Prototype',
+        href: 'https://www.figma.com/design/93ZGM9HYqLhhlTjRXxOXIa/NICKY-FROZEN?node-id=41-21&t=uj3Tp8PVWriqexjs-1',
+      },
+    ],
     image: '/projects/nicky-frozen.png',
     alt: 'Nicky Frozen POS interface showing transaction and product management screens',
     monogram: 'NF',
@@ -106,7 +130,11 @@ const filteredProjects = computed(() =>
     : projects.filter((project) => project.category === activeFilter.value)
 )
 
-const isExternal = (link) => link.startsWith('http')
+const hasHref = (href) => typeof href === 'string' && href.trim() !== '' && href.trim() !== '#'
+
+const getLinks = (project) => (project.links || []).filter((item) => hasHref(item.href))
+
+const primaryLink = (project) => getLinks(project)[0]?.href || ''
 </script>
 
 <template>
@@ -154,12 +182,21 @@ const isExternal = (link) => link.startsWith('http')
             <span class="thumb__icon" aria-hidden="true">
               <AppIcon :name="categoryIcons[project.category]" :size="19" />
             </span>
-            <div class="thumb__overlay" aria-hidden="true">
-              <span class="thumb__cta">
-                View Project
-                <AppIcon name="external" :size="15" />
+            <a
+              v-if="primaryLink(project)"
+              class="thumb__hit"
+              :href="primaryLink(project)"
+              target="_blank"
+              rel="noopener noreferrer"
+              :aria-label="`Open ${project.title} project`"
+            >
+              <span class="thumb__overlay" aria-hidden="true">
+                <span class="thumb__cta">
+                  View Project
+                  <AppIcon name="external" :size="15" />
+                </span>
               </span>
-            </div>
+            </a>
           </div>
 
           <div class="project-card__body">
@@ -175,18 +212,19 @@ const isExternal = (link) => link.startsWith('http')
               <li v-for="tag in project.tags" :key="tag">{{ tag }}</li>
             </ul>
 
-            <a
-              :href="project.link"
-              class="project-card__link"
-              :target="isExternal(project.link) ? '_blank' : undefined"
-              :rel="isExternal(project.link) ? 'noopener noreferrer' : undefined"
-              :aria-disabled="project.link === '#' ? 'true' : undefined"
-              :title="project.link === '#' ? 'Case study coming soon' : undefined"
-              @click="project.link === '#' && $event.preventDefault()"
-            >
-              {{ project.linkLabel }}
-              <AppIcon name="arrow-right" :size="16" />
-            </a>
+            <div v-if="getLinks(project).length" class="project-card__links">
+              <a
+                v-for="item in getLinks(project)"
+                :key="item.href"
+                :href="item.href"
+                class="project-card__link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ item.label }}
+                <AppIcon name="arrow-right" :size="16" />
+              </a>
+            </div>
           </div>
         </article>
         </TransitionGroup>
@@ -345,15 +383,28 @@ const isExternal = (link) => link.startsWith('http')
   -webkit-backdrop-filter: blur(6px);
 }
 
-.thumb__overlay {
+.thumb__hit {
   position: absolute;
   inset: 0;
   z-index: 2;
+  display: block;
+  color: inherit;
+}
+
+.thumb__hit:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.thumb__overlay {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(10, 14, 30, 0.55);
   opacity: 0;
+  pointer-events: none;
   transition: opacity 0.3s ease;
 }
 
@@ -435,11 +486,19 @@ const isExternal = (link) => link.startsWith('http')
   font-weight: 600;
 }
 
+.project-card__links {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin-top: 6px;
+}
+
 .project-card__link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 6px;
   color: var(--accent-text);
   font-size: 0.88rem;
   font-weight: 700;
@@ -448,10 +507,6 @@ const isExternal = (link) => link.startsWith('http')
 
 .project-card__link:hover {
   gap: 9px;
-}
-
-.project-card__link[aria-disabled='true'] {
-  opacity: 0.75;
 }
 
 .card-move,
