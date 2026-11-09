@@ -3,6 +3,7 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import NavBar from './components/NavBar.vue'
 import HeroSection from './components/HeroSection.vue'
 import AboutSection from './components/AboutSection.vue'
+import EducationSection from './components/EducationSection.vue'
 import SkillsSection from './components/SkillsSection.vue'
 import ProjectsSection from './components/ProjectsSection.vue'
 import ExperienceSection from './components/ExperienceSection.vue'
@@ -48,6 +49,7 @@ onBeforeUnmount(() => {
     <main>
       <HeroSection />
       <AboutSection />
+      <EducationSection />
       <SkillsSection />
       <ProjectsSection />
       <ExperienceSection />
