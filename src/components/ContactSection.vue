@@ -158,6 +158,15 @@ onBeforeUnmount(() => clearTimeout(timer))
               <AppIcon name="download" :size="18" />
               Download CV
             </a>
+
+            <a
+              class="btn btn--ghost"
+              href="/resume-putri-en.pdf"
+              download="Resume-Halimatussadiyah-Lola-Putri.pdf"
+            >
+              <AppIcon name="download" :size="18" />
+              Download Resume
+            </a>
           </div>
 
           <a class="contact__mail" href="mailto:sadiyahputri32@gmail.com">
